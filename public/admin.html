@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal · Clinic Connect</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topnav">
+    <div class="brand">
+      <svg class="pulse-mark" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-9 2 2h5" stroke="#0B4F4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Clinic Connect — Admin
+    </div>
+    <div class="nav-right">
+      <span id="who"></span>
+      <button class="link" id="logout">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Manage doctors</h1>
+      <p>Create doctor profiles, set working hours and slot length, and mark leave days — affected patients are notified automatically.</p>
+    </div>
+
+    <div class="card">
+      <h3>Add a doctor</h3>
+      <label for="d-name">Name</label>
+      <input id="d-name" placeholder="Dr. Priya Nair">
+      <label for="d-email">Email (used to log in)</label>
+      <input id="d-email" type="email" placeholder="priya.nair@clinic.local">
+      <label for="d-password">Temporary password</label>
+      <input id="d-password" type="password" placeholder="At least 6 characters">
+      <label for="d-spec">Specialisation</label>
+      <input id="d-spec" placeholder="e.g. Cardiology">
+      <div style="display:flex; gap:12px;">
+        <div style="flex:1;">
+          <label for="d-start">Working hours start</label>
+          <input id="d-start" type="time" value="09:00">
+        </div>
+        <div style="flex:1;">
+          <label for="d-end">Working hours end</label>
+          <input id="d-end" type="time" value="17:00">
+        </div>
+        <div style="flex:1;">
+          <label for="d-duration">Slot length (minutes)</label>
+          <input id="d-duration" type="number" value="20" min="5" step="5">
+        </div>
+      </div>
+      <button class="primary" onclick="createDoctor()">Add doctor</button>
+      <div id="create-msg"></div>
+    </div>
+
+    <h2 style="margin-top:32px;">Doctors</h2>
+    <div id="doctor-list"></div>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

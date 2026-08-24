@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Portal · Clinic Connect</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topnav">
+    <div class="brand">
+      <svg class="pulse-mark" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-9 2 2h5" stroke="#0B4F4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Clinic Connect — Patient
+    </div>
+    <div class="nav-right">
+      <span id="who"></span>
+      <button class="link" id="logout">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Your appointments</h1>
+      <p>Book a slot with a doctor, share your symptoms in advance, and track your visit summaries.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="book">Book an appointment</button>
+      <button class="tab" data-tab="mine">My appointments</button>
+    </div>
+
+    <section id="panel-book"></section>
+    <section id="panel-mine" style="display:none;"></section>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/patient.js"></script>
+</body>
+</html>

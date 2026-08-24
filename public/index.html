@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Appointment Manager</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topnav">
+    <div class="brand">
+      <svg class="pulse-mark" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-9 2 2h5" stroke="#0B4F4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Clinic Connect
+    </div>
+    <div class="nav-right muted">Appointments · Symptom triage · Follow-ups</div>
+  </header>
+
+  <main style="max-width:420px;">
+    <div class="hero">
+      <h1>Sign in to Clinic Connect</h1>
+      <p>Patients, doctors, and admins all sign in here — the account role decides which portal you land on.</p>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" id="tab-login">Log in</button>
+        <button class="tab" id="tab-register">Register (patients)</button>
+      </div>
+
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" required placeholder="you@example.com">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" required placeholder="••••••••">
+        <button class="primary" type="submit">Log in</button>
+        <div class="error" id="login-error"></div>
+      </form>
+
+      <form id="register-form" style="display:none;">
+        <label for="reg-name">Full name</label>
+        <input id="reg-name" required placeholder="Jordan Lee">
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" required placeholder="you@example.com">
+        <label for="reg-phone">Phone (optional)</label>
+        <input id="reg-phone" placeholder="+91 98765 43210">
+        <label for="reg-password">Password</label>
+        <input id="reg-password" type="password" required minlength="6" placeholder="At least 6 characters">
+        <button class="primary" type="submit">Create patient account</button>
+        <div class="error" id="register-error"></div>
+      </form>
+    </div>
+
+    <div class="card muted">
+      <strong>Demo accounts</strong> (seeded automatically on first run):<br>
+      Admin — admin@clinic.local / admin123<br>
+      Doctor — asha.rao@clinic.local / doctor123<br>
+      Doctor — liam.chen@clinic.local / doctor123<br>
+      Or register a new patient account above.
+    </div>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script>
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+
+    tabLogin.onclick = () => {
+      tabLogin.classList.add('active'); tabRegister.classList.remove('active');
+      loginForm.style.display = 'block'; registerForm.style.display = 'none';
+    };
+    tabRegister.onclick = () => {
+      tabRegister.classList.add('active'); tabLogin.classList.remove('active');
+      registerForm.style.display = 'block'; loginForm.style.display = 'none';
+    };
+
+    function routeFor(role) {
+      return { admin: '/admin.html', doctor: '/doctor.html', patient: '/patient.html' }[role] || '/index.html';
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const errorEl = document.getElementById('login-error');
+      errorEl.textContent = '';
+      try {
+        const { token, user } = await api('/auth/login', { method: 'POST', body: { email, password } });
+        Auth.setSession(token, user);
+        window.location.href = routeFor(user.role);
+      } catch (err) {
+        errorEl.textContent = err.message;
+      }
+    });
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const phone = document.getElementById('reg-phone').value;
+      const password = document.getElementById('reg-password').value;
+      const errorEl = document.getElementById('register-error');
+      errorEl.textContent = '';
+      try {
+        const { token, user } = await api('/auth/register', { method: 'POST', body: { name, email, phone, password } });
+        Auth.setSession(token, user);
+        window.location.href = routeFor(user.role);
+      } catch (err) {
+        errorEl.textContent = err.message;
+      }
+    });
+
+    // If already logged in, skip straight to the right portal
+    const existing = Auth.getUser();
+    if (existing) window.location.href = routeFor(existing.role);
+  </script>
+</body>
+</html>

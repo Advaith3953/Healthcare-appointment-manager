@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Portal · Clinic Connect</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topnav">
+    <div class="brand">
+      <svg class="pulse-mark" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-9 2 2h5" stroke="#0B4F4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Clinic Connect — Doctor
+    </div>
+    <div class="nav-right">
+      <span id="who"></span>
+      <button class="link" id="logout">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Your appointments</h1>
+      <p>Review each patient's AI-generated pre-visit summary before the visit, then submit notes to generate a patient-friendly follow-up.</p>
+    </div>
+    <section id="appointments"></section>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/doctor.js"></script>
+</body>
+</html>
